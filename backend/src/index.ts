@@ -2,6 +2,8 @@ import express, {Response} from 'express'
 import cors from 'cors'
 import { login } from './controllers/authController'
 import { AuthRequest, verifyJWT } from './middleware/authMiddleware'
+import z from 'zod'
+import { validate } from './services/validate'
 
 const app = express()
 const PORT = 5000
@@ -15,11 +17,18 @@ const corsOptions = {
 
 app.use(cors(corsOptions))
 
+const schemaLogin = z.object({
+    email: z.email(),
+    password: z.string().min(8, 'Mínimo 8 caracteres.')
+})
+
+export type TLogin = z.infer<typeof schemaLogin>
+
 app.get('/', (req, res) => {
     res.status(200).json({ message: "Servidor rodando!" })
 })
 
-app.post('/login', login)
+app.post('/login', validate(schemaLogin), login)
 
 app.get('/perfil', verifyJWT, (req: AuthRequest, res: Response) => {
     res.status(200).json({ message: `Seja bem vindo! Seu id é ${req.userId}` })
