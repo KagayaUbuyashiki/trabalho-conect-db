@@ -4,6 +4,7 @@ import { login } from './controllers/authController'
 import { AuthRequest, verifyJWT } from './middleware/authMiddleware'
 import z from 'zod'
 import { validate } from './services/validate'
+import { getProducts} from './controllers/productController'
 
 const app = express()
 const PORT = 5000
@@ -51,3 +52,5 @@ app.get('/users', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Servidor rodando em http://localhost:${PORT}`)
 })
+
+app.get('/produtos', getProducts) 

@@ -23,6 +23,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxN
 ###
 
 // GET Produtos (aceita ?q= para busca por nome)
+GET http://localhost:5000/produtos?q=bituca
+
+###
+// GET Produtos
 GET http://localhost:5000/produtos
 
 ###
